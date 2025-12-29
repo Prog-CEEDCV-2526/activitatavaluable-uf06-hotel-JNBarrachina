@@ -102,8 +102,8 @@ public class App {
         System.out.println("1. Reservar una habitació");
         System.out.println("2. Alliberar una habitació");
         System.out.println("3. Consultar disponibilitat");
-        System.out.println("4. Llistar reserves per tipus");
-        System.out.println("5. Obtindre una reserva");
+        System.out.println("4. Consultar dades d'una reserva");
+        System.out.println("5. Consultar reserves per tipus");
         System.out.println("6. Ixir");
     }
 
@@ -155,6 +155,10 @@ public class App {
 
         reserves.put(bookingCode, bookingData); // Nueva reserva
         disponibilitatHabitacions.put(roomType, disponibilitatHabitacions.get(roomType) - 1); // Disponibilidad -1
+
+        System.out.println("\n");
+        System.out.println("Reserva creada amb èxit!");
+        System.out.println("CÓDIGO DE RESERVA: " + bookingCode);
     }
 
     /**
@@ -165,8 +169,7 @@ public class App {
         int opcio;
 
         do {
-            opcio = llegirEnter("Opció (1-3): ");
-
+            opcio = llegirEnter("Seleccione el tipus d'habitació  (1-3): ");
         } while (opcio < 1 || opcio > 3);
 
         switch (opcio) {
@@ -188,7 +191,7 @@ public class App {
      * habitacions disponibles. En cas contrari, retorna null.
      */
     public static String seleccionarTipusHabitacioDisponible() {
-        System.out.println("Seleccione el tipus d'habitació:");
+        System.out.println("Tipus d'habitació:");
         mostrarInfoTipus(TIPUS_ESTANDARD);
         mostrarInfoTipus(TIPUS_SUITE);
         mostrarInfoTipus(TIPUS_DELUXE);
@@ -227,7 +230,7 @@ public class App {
         };
 
         do {
-            opcio = llegirEnter("Opció (0-4): ");
+            opcio = llegirEnter("Selecciona un servei (0-4): ");
 
             if (opcio == 0) {
                 break;
@@ -265,18 +268,18 @@ public class App {
         float preuServeisSeleccionats = 0;
         System.out.println("Preu Serveis: ");
         for (String servei : serveisSeleccionats) {
-            System.out.println(servei + ": " + preusServeis.get(servei) + "€");
+            System.out.println("    " + servei + ": " + preusServeis.get(servei) + "€");
             preuServeisSeleccionats += preusServeis.get(servei);
         }
         System.out.println("Total serveis: " + preuServeisSeleccionats);
         System.out.println("\n");
 
         float preuSenseIVA = preuHabitacio + preuServeisSeleccionats;
-        System.out.println("Subtotal: " + preuSenseIVA);
-        System.out.println("IVA (21%): " + (preuSenseIVA * IVA));
+        System.out.println("Subtotal: " + preuSenseIVA + "€");
+        System.out.println("IVA (21%): " + (preuSenseIVA * IVA) + "€");
 
         float preuFinal = preuSenseIVA + (preuSenseIVA * IVA);
-        System.out.println("TOTAL: " + preuFinal);
+        System.out.println("TOTAL: " + preuFinal + "€");
 
         return preuFinal;
     }
@@ -305,15 +308,19 @@ public class App {
         int bookingCode;
 
         do {
-            System.out.println("Introduce un código de reserva válido: ");
-            bookingCode = llegirEnter("Opció (100-999): ");
+            bookingCode = llegirEnter("Introdueix un nombre de reserva vàlid (100-999): ");
         } while (bookingCode > 999 || bookingCode < 100);
 
         if (reserves.containsKey(bookingCode)) {
+            System.out.println("\n");
+            System.out.println("Reserva encontrada!");
+
             String roomType = reserves.get(bookingCode).get(0); // Tipo de habitación: index 0
             disponibilitatHabitacions.put(roomType, disponibilitatHabitacions.get(roomType) + 1);
 
             reserves.remove(bookingCode); // Eliminar reserva
+            System.out.println("Habitació alliberada correctament.");
+            System.out.println("Disponibilitat actualizada.");
         } else {
             System.out.println("No s`ha trobat cap reserva amb aquest codi");
         }
@@ -348,7 +355,7 @@ public class App {
         int bookingCode;
 
         do {
-            bookingCode = llegirEnter("Opció (100-999): ");
+            bookingCode = llegirEnter("Introdueix un nombre de reserva vàlid (100-999): ");
         } while (bookingCode > 999 || bookingCode < 100);
 
         if (reserves.containsKey(bookingCode)) {
@@ -379,7 +386,7 @@ public class App {
 
         System.out.println("- Serveis adicionals: ");
         for (int i = 2; i < bookingData.size(); i++) {
-            System.out.println((i - 1) + ". " + bookingData.get(i));
+            System.out.println("    " + bookingData.get(i));
         }
     }
 
