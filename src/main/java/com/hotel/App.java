@@ -429,10 +429,17 @@ public class App {
     static int llegirEnter(String missatge) {
         int valor = 0;
         boolean correcte = false;
+
         while (!correcte) {
             System.out.print(missatge);
-            valor = sc.nextInt();
-            correcte = true;
+
+            if (sc.hasNextInt()) {
+                valor = sc.nextInt();
+                correcte = true;
+            } else {
+                System.out.println("Error: debes introducir un número entero.");
+                sc.next(); // descartar la entrada incorrecta
+            }
         }
 
         return valor;
