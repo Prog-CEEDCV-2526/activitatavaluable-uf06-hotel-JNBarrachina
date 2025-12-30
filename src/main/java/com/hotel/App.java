@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Gestió de reserves d'un hotel.
@@ -169,7 +170,7 @@ public class App {
         int opcio;
 
         do {
-            opcio = llegirEnter("Seleccione el tipus d'habitació  (1-3): ");
+            opcio = llegirEnter("Seleccione el tipus d'habitació (Estándar: 1; Suite: 2; Deluxe: 3): ");
         } while (opcio < 1 || opcio > 3);
 
         switch (opcio) {
@@ -343,7 +344,24 @@ public class App {
      * associades a un tipus d'habitació.
      */
     public static void llistarReservesPerTipus(int[] codis, String tipus) {
-        // TODO: Implementar recursivitat
+        if (codis.length == 0) {
+            System.out.println("No hi ha reserves d`aquest tipus");
+        }
+
+        System.out.println("\n");
+        if (tipus.equals(reserves.get(codis[0]).get(0))) { // Index 0: roomType
+            mostrarDadesReserva(codis[0]);
+        }
+
+        if (codis.length == 1) {
+            System.out.println("(No hi ha més reserves d`aquest tipus.)");
+            return;
+        }
+
+        int[] newCodis = new int[codis.length - 1];
+        System.arraycopy(codis, 1, newCodis, 0, newCodis.length);
+
+        llistarReservesPerTipus(newCodis, tipus);
     }
 
     /**
@@ -371,7 +389,19 @@ public class App {
      */
     public static void obtindreReservaPerTipus() {
         System.out.println("\n===== CONSULTAR RESERVES PER TIPUS =====");
-        // TODO: Llistar reserves per tipus
+
+        String tipus = seleccionarTipusHabitacio();
+
+        int[] codis = new int[reserves.size()];
+        Set<Integer> bookingKeys = reserves.keySet();
+
+        int index = 0;
+        for (Integer key : bookingKeys) {
+            codis[index] = key;
+            index++;
+        }
+
+        llistarReservesPerTipus(codis, tipus);
     }
 
     /**
