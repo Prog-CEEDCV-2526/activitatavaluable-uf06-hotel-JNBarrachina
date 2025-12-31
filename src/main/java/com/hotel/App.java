@@ -129,6 +129,7 @@ public class App {
                 obtindreReservaPerTipus();
                 break;
             default:
+                System.out.println("Opció no vàlida");
                 break;
         }
     }
@@ -337,7 +338,7 @@ public class App {
      */
     public static void consultarDisponibilitat() {
         System.out.println("===== DISPONIBILITAT D'HABITACIONS =====");
-        System.out.println("TIPUS        LLIURES  OCUPADES");
+        System.out.println("Tipus        Lliures  Ocupades");
 
         mostrarDisponibilitatTipus(TIPUS_ESTANDARD);
         mostrarDisponibilitatTipus(TIPUS_SUITE);
@@ -349,8 +350,9 @@ public class App {
      * associades a un tipus d'habitació.
      */
     public static void llistarReservesPerTipus(int[] codis, String tipus) {
-        if (codis.length == 0) {
+        if (codis == null || codis.length == 0) {
             System.out.println("No hi ha reserves d`aquest tipus");
+            return;
         }
 
         System.out.println("\n");
@@ -358,10 +360,10 @@ public class App {
             mostrarDadesReserva(codis[0]);
         }
 
-        if (codis.length == 1) {
-            System.out.println("(No hi ha més reserves d`aquest tipus.)");
-            return;
-        }
+        // if (codis.length == 1) {
+        // System.out.println("(No hi ha més reserves d`aquest tipus.)");
+        // return;
+        // }
 
         int[] newCodis = new int[codis.length - 1];
         System.arraycopy(codis, 1, newCodis, 0, newCodis.length);
@@ -416,6 +418,7 @@ public class App {
         System.out.println("Dades de la reserva: ");
 
         ArrayList<String> bookingData = reserves.get(codi);
+        System.out.println("- Codi reserva: " + codi);
         System.out.println("- Tipus d`habitació: " + bookingData.get(0));
         System.out.println("- Cost total: " + bookingData.get(1));
 
