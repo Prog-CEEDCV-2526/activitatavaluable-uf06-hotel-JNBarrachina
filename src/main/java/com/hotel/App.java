@@ -159,7 +159,7 @@ public class App {
 
         System.out.println("\n");
         System.out.println("Reserva creada amb èxit!");
-        System.out.println("CÓDIGO DE RESERVA: " + bookingCode);
+        System.out.println("Codi de reserva: " + bookingCode);
     }
 
     /**
