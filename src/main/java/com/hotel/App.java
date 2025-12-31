@@ -214,23 +214,30 @@ public class App {
      */
     public static ArrayList<String> seleccionarServeis() {
         ArrayList<String> selectedServices = new ArrayList<>();
+        String[] services = { SERVEI_ESMORZAR, SERVEI_GIMNAS, SERVEI_SPA, SERVEI_PISCINA };
         int opcio;
 
-        System.out.println("Serveis addicionals (0-4)");
-        System.out.println("0. No afegir serveis.");
-        System.out.println("1. " + SERVEI_ESMORZAR + " (" + preusServeis.get(SERVEI_ESMORZAR) + "€)");
-        System.out.println("2. " + SERVEI_GIMNAS + " (" + preusServeis.get(SERVEI_GIMNAS) + "€)");
-        System.out.println("3. " + SERVEI_SPA + " (" + preusServeis.get(SERVEI_SPA) + "€)");
-        System.out.println("4. " + SERVEI_PISCINA + " (" + preusServeis.get(SERVEI_PISCINA) + "€)");
+        while (true) {
+            System.out.print("Vols afegir serveis addicionals? (s/n): ");
+            char resposta = ' ';
+            try {
+                resposta = (char) System.in.read();
+                System.in.read();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        String[] services = {
-                SERVEI_ESMORZAR,
-                SERVEI_GIMNAS,
-                SERVEI_SPA,
-                SERVEI_PISCINA
-        };
+            if (Character.toLowerCase(resposta) != 's') {
+                break;
+            }
 
-        do {
+            System.out.println("Serveis addicionals (0-4)");
+            System.out.println("0. No afegir serveis.");
+            System.out.println("1. " + SERVEI_ESMORZAR + " (" + preusServeis.get(SERVEI_ESMORZAR) + "€)");
+            System.out.println("2. " + SERVEI_GIMNAS + " (" + preusServeis.get(SERVEI_GIMNAS) + "€)");
+            System.out.println("3. " + SERVEI_SPA + " (" + preusServeis.get(SERVEI_SPA) + "€)");
+            System.out.println("4. " + SERVEI_PISCINA + " (" + preusServeis.get(SERVEI_PISCINA) + "€)");
+
             opcio = llegirEnter("Selecciona un servei (0-4): ");
 
             if (opcio == 0) {
@@ -243,15 +250,13 @@ public class App {
             }
 
             String newService = services[opcio - 1];
-
             if (selectedServices.contains(newService)) {
                 System.out.println("Aquest servei ja ha sigut seleccionat");
             } else {
                 selectedServices.add(newService);
                 System.out.println("Servei afegit: " + newService);
             }
-
-        } while (opcio != 0);
+        }
 
         return selectedServices;
     }
